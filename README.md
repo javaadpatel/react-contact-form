@@ -17,7 +17,7 @@ If you've ever wanted to quickly slap together a contact form then this is for y
 - [x] [Formik](https://formik.org/) - Handles all the form field binding and state tracking.
 - [x] [Yup](https://github.com/jquense/yup) - Handles all the validation.
 - [x] [Treact](https://treact.owaiskhan.me/) - Handles the component and styling. This library is made using React and TailWind Css.
-- [x] [Emails]() - Handled by a Netlify function that integrates with [SendInBlue](https://www.sendinblue.com/). You can find the function app [here](), either use this one or swop in your own email mechanism.
+- [x] [Emails]() - Handled by a Netlify function that integrates with [SendInBlue](https://www.sendinblue.com/). You can find the function app [here](https://google.com), either use this one or swop in your own email mechanism.
 
 ## Learn more about this
 
