@@ -1,11 +1,7 @@
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import axios from "axios";
 import _ from "lodash";
-import { Ellipsis } from "react-spinners-css";
-import { Formik, ErrorMessage } from "formik";
-import * as yup from "yup";
 import {
   SectionHeading,
   Subheading as SubheadingBase,
@@ -57,115 +53,48 @@ export default ({
 }) => {
   // The textOnLeft boolean prop can be used to display either the text on left or right side of the image.
   return (
-    <Formik
-      initialValues={{
-        Email: "",
-        FullName: "",
-        Subject: "",
-        Message: "",
-      }}
-      validationSchema={yup.object().shape({
-        Email: yup
-          .string()
-          .email("Invalid email address")
-          .required("Email is required"),
-        FullName: yup.string().required("Name is required").max(50),
-        Subject: yup.string().required("Subject is required").max(50),
-        Message: yup.string().required("Message is required").max(200),
-      })}
-      onSubmit={async (values, actions) => {
-        actions.setSubmitting(true);
-
-        //send request
-        try {
-          const emailFunctionUrl = "http://localhost:3005";
-          const data = `Email=${values.Email}&FullName=${values.FullName}&Subject=${values.Subject}&Message=${values.Message}`;
-
-          await axios.post(
-            `${emailFunctionUrl}/.netlify/functions/server/sendEmail`,
-            data,
-            {
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-              },
-            }
-          );
-        } catch (err) {
-        } finally {
-          actions.resetForm();
-          actions.setSubmitting(false);
-        }
-      }}
-      render={({ errors, handleSubmit, isSubmitting, getFieldProps }) => (
-        <Container id={id}>
-          <TwoColumn>
-            <ImageColumn>
-              <Image imageSrc={EmailIllustrationSrc} />
-            </ImageColumn>
-            <TextColumn textOnLeft={textOnLeft}>
-              <TextContent>
-                {subheading && <Subheading>{subheading}</Subheading>}
-                <Heading>{heading}</Heading>
-                {description && <Description>{description}</Description>}
-                <Form loading={isSubmitting} onSubmit={handleSubmit}>
-                  <Input
-                    id="Email"
-                    label="Email"
-                    name="Email"
-                    placeholder="Your Email Address"
-                    {...getFieldProps("Email")}
-                  />
-                  <ErrorMessage name="Email" />
-                  <Input
-                    id="FullName"
-                    label="FullName"
-                    type="text"
-                    name="FullName"
-                    placeholder="Full Name"
-                    {...getFieldProps("FullName")}
-                  />
-                  <ErrorMessage name="FullName" />
-                  <Input
-                    id="Subject"
-                    label="Subject"
-                    type="text"
-                    name="Subject"
-                    placeholder="Subject"
-                    {...getFieldProps("Subject")}
-                  />
-                  <ErrorMessage name="Subject" />
-                  <Textarea
-                    id="Message"
-                    label="Message"
-                    name="Message"
-                    placeholder="Your Message Here"
-                    {...getFieldProps("Message")}
-                  />
-                  <ErrorMessage name="Message" />
-                  <SubmitButton
-                    type="submit"
-                    loading={isSubmitting}
-                    disabled={isSubmitting || !_.isEmpty(errors)}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Ellipsis
-                          color="#f7fafc"
-                          size={40}
-                          style={{ position: "absolute" }}
-                        />
-                        Sending
-                      </>
-                    ) : (
-                      "Send"
-                    )}
-                  </SubmitButton>
-                </Form>
-              </TextContent>
-            </TextColumn>
-          </TwoColumn>
-        </Container>
-      )}
-    />
+    <Container id={id}>
+      <TwoColumn>
+        <ImageColumn>
+          <Image imageSrc={EmailIllustrationSrc} />
+        </ImageColumn>
+        <TextColumn textOnLeft={textOnLeft}>
+          <TextContent>
+            {subheading && <Subheading>{subheading}</Subheading>}
+            <Heading>{heading}</Heading>
+            {description && <Description>{description}</Description>}
+            <Form>
+              <Input
+                id="Email"
+                label="Email"
+                name="Email"
+                placeholder="Your Email Address"
+              />
+              <Input
+                id="FullName"
+                label="FullName"
+                type="text"
+                name="FullName"
+                placeholder="Full Name"
+              />
+              <Input
+                id="Subject"
+                label="Subject"
+                type="text"
+                name="Subject"
+                placeholder="Subject"
+              />
+              <Textarea
+                id="Message"
+                label="Message"
+                name="Message"
+                placeholder="Your Message Here"
+              />
+              <SubmitButton type="submit">Send</SubmitButton>
+            </Form>
+          </TextContent>
+        </TextColumn>
+      </TwoColumn>
+    </Container>
   );
 };
