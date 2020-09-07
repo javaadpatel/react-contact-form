@@ -90,9 +90,11 @@ export default ({
               },
             }
           );
+        } catch (err) {
+        } finally {
           actions.resetForm();
           actions.setSubmitting(false);
-        } catch (err) {}
+        }
       }}
       render={({ errors, handleSubmit, isSubmitting, getFieldProps }) => (
         <Container id={id}>
